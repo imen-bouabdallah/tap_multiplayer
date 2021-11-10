@@ -3,6 +3,9 @@
 A clone app for tap tap game
 
 ## Getting Started
+![game screenshot](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100535~2%5B1%5D.png)
+![game screenshot](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100813%5B1%5D.png)
+![game screenshot](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100829%5B1%5D.png)
 
 This project is a starting point for a Flutter application.
 
