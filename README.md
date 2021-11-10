@@ -3,7 +3,7 @@
 A clone app for tap tap game
 
 ## Getting Started
-![](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100535~2%5B1%5D.png | width =100)
+<img src="https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100535~2%5B1%5D.png" width="100" height="100">
 ![game screenshot](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100813%5B1%5D.png)
 ![game screenshot](https://github.com/imen-bouabdallah/tap_multiplayer/blob/master/Screenshot_20211110-100829%5B1%5D.png)
 
