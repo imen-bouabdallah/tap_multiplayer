@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tap_multiplayer/game.dart';
@@ -41,12 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    int difficulties = 2; //define game difficulty
+
+
     //show status bar
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     //transparent status bar
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -67,12 +75,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 16),
               new GestureDetector(
-                onTap: () => Navigator.of(context).pop(true),
+                onTap: () {
+                  if (Platform.isAndroid) {
+                    SystemNavigator.pop();
+                  } else if (Platform.isIOS) {
+                    exit(0);
+                  }
+                },//Navigator.of(context).pop(true),
                 child: Text("YES"),
               ),
             ],
           ),
-        ); return true;
+        ); return false;
       },
       child: Container(
         decoration: BoxDecoration(
@@ -118,16 +132,82 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: 30,
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () =>{
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => game() ) ),
+                        MaterialPageRoute(builder: (context) => game(difficult : difficulties) ) ),
                   },
                   style: TextButton.styleFrom(
                       surfaceTintColor: Colors.blue[300],
+                    fixedSize: Size(100, 5),
                   ),
                   child: Text(
                     'Begin',
+                      style: TextStyle(
+                        color: Colors.black54,
+                      )
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed:  () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => Dialog(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Select game difficulty'),
+                            SizedBox(height: 15),
+                            TextButton(
+                              onPressed: () {
+                                difficulties = 2;
+                                Navigator.pop(context);
+                              },
+                              child: Text('Easy'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                difficulties = 1;
+                                print(difficulties);
+                                Navigator.pop(context);
+                              },
+                              child: Text('Medium'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Hard'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  style: TextButton.styleFrom(
+                    surfaceTintColor: Colors.blue[300],
+                    fixedSize: Size(100, 5),
+                  ),
+
+                  child: Text(
+                      'Difficulty',
+                      style: TextStyle(
+                        color: Colors.black54,
+                      )
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () =>{
+                  },
+                  style: TextButton.styleFrom(
+                    surfaceTintColor: Colors.blue[300],
+                    fixedSize: Size(100, 5),
+                  ),
+
+                  child: Text(
+                      'Theme',
                       style: TextStyle(
                         color: Colors.black54,
                       )
