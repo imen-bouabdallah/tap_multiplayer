@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
 
 
@@ -54,8 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return WillPopScope(
-    onWillPop: (){
-        return showDialog(
+    onWillPop: () async {
+        showDialog(
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('Are you sure?'),
@@ -72,8 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-        ) ??
-            false;
+        ); return true;
       },
       child: Container(
         decoration: BoxDecoration(
@@ -82,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             end: Alignment.bottomRight,
             colors: [
               Colors.lightBlue,
-              Colors.red[400],
+              Colors.redAccent,
             ]
           )
         ),
@@ -119,12 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: 30,
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () =>{
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => game() ) ),
                   },
-                  color: Colors.blue[300],
+                  style: TextButton.styleFrom(
+                      surfaceTintColor: Colors.blue[300],
+                  ),
                   child: Text(
                     'Begin',
                       style: TextStyle(

@@ -1,9 +1,12 @@
 
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:positioned_tap_detector/positioned_tap_detector.dart';
+import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
+import 'package:confetti/confetti.dart';
 
 
 class game extends StatelessWidget{
@@ -30,12 +33,22 @@ class TheGame extends StatefulWidget{
 
 class _TheGameState extends State<TheGame> {
 
+  // declare confettiController;
+  late ConfettiController _topController;
+
   int _cpt =0, _cpt2 = 0;
   String _textPlayer1 = 'Player one', _textPlayer2= 'Player 2';
   bool _win = false, _start = false;
-  double _screenHeight, heightPlayer1, heightPlayer2,
+  late double _screenHeight, heightPlayer1, heightPlayer2,
       width, border;
 
+
+  void initState() {
+    super.initState();
+    _topController =
+        ConfettiController(duration: const Duration(seconds: 10));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +85,7 @@ class _TheGameState extends State<TheGame> {
         else{
           ///otherwise we need to know which player has tapped to increment its box
 
-          if (position.relative.dy > (_screenHeight / 2)) {
+          if (position.relative!.dy > (_screenHeight / 2)) {
             ///player two has tapped
 
             _cpt++;
@@ -116,7 +129,7 @@ class _TheGameState extends State<TheGame> {
             width: border/2,
           )
         ),
-        child: PositionedTapDetector(
+        child: PositionedTapDetector2(
 
           ///we need to get the position of tapping to know which player did it
           onTap:  (position) => _start ?
@@ -155,25 +168,43 @@ class _TheGameState extends State<TheGame> {
                   SizedBox(
                     width: width,
                     height: heightPlayer2 - 10.0*_cpt2 + 10.0*_cpt,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
+                    child: /*Column(
+                      children: [*/
+                        DecoratedBox(
+                        decoration: BoxDecoration(
                         color: Colors.blue[300],
-                      ),
-                      child:
-                      _win ? Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          _textPlayer2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                          ),
                         ),
-                      )
-                          : Text(''),
+                        child:
+                        _win ? Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            _textPlayer2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                            ),
+                          ),
+                        )
+                            : Text(''),
+
                     ),
-                  ),
+                      /*  ConfettiWidget(
+                          confettiController: _topController,
+                          blastDirection: 3.14 / 2,
+                          maxBlastForce: 5,
+                          minBlastForce: 1,
+                          emissionFrequency: 0.03,
+
+                          // 10 paticles will pop-up at a time
+                          numberOfParticles: 10,
+
+                          // particles will pop-up
+                          gravity: 0,
+                        ),
+                      ],
+                    ),*/
+                    ),
 
                 ],
               ),
