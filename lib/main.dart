@@ -10,7 +10,12 @@ void main() {
   runApp(MyApp());
   runApp(
       ChangeNotifierProvider<ThemeModel>(
-          create: (BuildContext context) => ThemeModel(), child: MyApp()));
+          create: (context) => ThemeModel(),
+          child: Consumer<ThemeModel>(
+            builder: (context, provider, child) => MyApp()
+          )
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -186,13 +191,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             TextButton(
                               onPressed: () {
                                 difficulties = 1;
-                                print(difficulties);
                                 Navigator.pop(context);
                               },
                               child: Text('Medium'),
                             ),
                             TextButton(
                               onPressed: () {
+                                difficulties = 0;
                                 Navigator.pop(context);
                               },
                               child: Text('Hard'),
@@ -224,29 +229,32 @@ class _MyHomePageState extends State<MyHomePage> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text('Select game difficulty'),
+                              Text('Select Theme'), //TODO fix it, the switch is not working
                               SizedBox(height: 15),
                               TextButton(
                                 onPressed: () {
-                                  difficulties = 2;
+                                  Provider.of<ThemeModel>(context, listen: false).changeTheme(2);
+                                  setState(() {}); ///refresh the page
                                   Navigator.pop(context);
                                 },
 
-                                child: Text('Easy'),
+                                child: Text('Default (Red/Blue)'),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  difficulties = 1;
-                                  print(difficulties);
+                                  Provider.of<ThemeModel>(context, listen: false).changeTheme(2);
+                                  setState(() {});
                                   Navigator.pop(context);
                                 },
-                                child: Text('Medium'),
+                                child: Text('Pink & Violet'),
                               ),
                               TextButton(
                                 onPressed: () {
+                                  Provider.of<ThemeModel>(context, listen: false).changeTheme(3);
+                                  setState(() {});
                                   Navigator.pop(context);
                                 },
-                                child: Text('Hard'),
+                                child: Text('Pink & Brown'),
                               ),
                             ],
                           ),

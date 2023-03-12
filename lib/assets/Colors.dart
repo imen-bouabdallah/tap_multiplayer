@@ -19,11 +19,8 @@ class MyColors {
 //get the name and the list and returns the color
 MaterialColor retrieveColor(String name, List<MyColors> list){
   int i;
-  print("inside retrieve fub");
     for (i=0; i<list.length; i++){
       if(list[i].name==name){
-        print("looking for" + name );
-        print(list[i].color);
         return buildMaterialColor(list[i].color);
       }
     }

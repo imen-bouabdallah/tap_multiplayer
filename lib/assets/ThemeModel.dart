@@ -4,13 +4,15 @@ import 'package:tap_multiplayer/assets/Colors.dart';
 
 ///a class to switch between themes when the user clicks the button
 class ThemeModel extends ChangeNotifier{
-  ThemeData currentTheme = AppThemes.PB_Theme;
+  ThemeData currentTheme = AppThemes.RB_Theme;
 
   changeTheme(int value){
     if(value==1)
       currentTheme = AppThemes.RB_Theme;
     else if(value == 2)
       currentTheme = AppThemes.PV_Theme;
+    else if(value == 3)
+      currentTheme = AppThemes.PB_Theme;
   }
 
 
