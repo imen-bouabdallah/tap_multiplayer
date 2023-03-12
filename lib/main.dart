@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tap_multiplayer/assets/Colors.dart';
 import 'package:tap_multiplayer/game.dart';
 
 void main() {
@@ -10,8 +11,10 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  List<MyColors> currentTheme = RB_Theme;
   @override
   Widget build(BuildContext context) {
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // This is the theme of the application.
 
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: retrieveColor('primary', currentTheme),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Finger battle'),
@@ -124,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     'Tap Tap\n\n multi-player game',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.black54,
+                      color: retrieveColor('primary', currentTheme),
                       fontSize: 30,
                     )
                   ),
