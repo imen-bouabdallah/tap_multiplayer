@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+///a class of color/name to make access easy
 class MyColors {
   final Color color;
   final String name;
 
   MyColors(this.color, this.name);
 
- /* Color getColor(){
+ /*Color getColor(){
     return this.color;
   }
 
@@ -15,33 +16,59 @@ class MyColors {
   }*/
 }
 
+//get the name and the list and returns the color
 MaterialColor retrieveColor(String name, List<MyColors> list){
   int i;
-
+  print("inside retrieve fub");
     for (i=0; i<list.length; i++){
-      if(list.elementAt(i).name==name){
-        return buildMaterialColor(list.elementAt(i).color);
+      if(list[i].name==name){
+        print("looking for" + name );
+        print(list[i].color);
+        return buildMaterialColor(list[i].color);
       }
     }
-
 
   return buildMaterialColor(Colors.white);
 }
 
-List<MyColors> PV_Theme = <MyColors>[
+///Color list to make it easier bcz themeData only uses Colors and it's limites
+
+//pink violet
+List<MyColors> PV_colors = <MyColors>[
   MyColors(Colors.purple.shade50, 'primary'),
-  MyColors(Color(0xffCDB4DB), 'color1'),
-  MyColors(Color(0xffFFC8DD), 'color2'),
-  MyColors(Colors.white, 'text1'),
-  MyColors(Colors.white60, 'text2'),
+  MyColors(Color(0xffffc8dd), 'colorGradiant1'),
+  MyColors(Color(0xffcdb4db), 'colorGradiant2'),
+  MyColors(Colors.white, 'primaryText'),
+  MyColors(Colors.white60, 'secondaryText'),
+
+  MyColors(Color(0xffE5D1FA), 'buttonBGColor'),
 ];
 
-List<MyColors> RB_Theme = <MyColors>[
+//red blue
+List<MyColors> RB_colors = <MyColors>[
   MyColors(Colors.lightBlue, 'primary'),
-  MyColors(Colors.blueAccent, 'color1'),
+  MyColors(Colors.blue.shade300, 'color1'),
   MyColors(Colors.redAccent, 'color2'),
-  MyColors(Colors.black54, 'text1'),
-  MyColors(Colors.black26, 'text2'),
+  MyColors(Colors.black54, 'primaryText'),
+  MyColors(Colors.black26, 'secondaryText'),
+
+  MyColors(Color(0xff97DEFF), 'buttonBGColor'),
+];
+
+//pink brown
+List<MyColors> PB_colors = <MyColors>[
+  MyColors(Color(0xffd6ccc2), 'primary'),
+  MyColors(Color(0xffe5989b), 'colorGradiant1'),
+  MyColors(Color(0xffb5838d), 'colorGradiant2'),
+
+  MyColors(Color(0xffdad7cd), 'primaryText'),
+  MyColors(Colors.white60, 'secondaryText'),
+
+  MyColors(Color(0xffffb4a2), 'buttonBGColor'),
+  MyColors(Colors.white60, 'iconColor'),
+
+  MyColors(Colors.black, 'dialogTitle'),///TODO
+
 ];
 
 

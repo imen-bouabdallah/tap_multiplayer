@@ -36,6 +36,9 @@ dependencies:
   #confetti for celebration
   confetti: ^0.7.0
 
+  #provider to manage state globally
+  provider: ^6.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

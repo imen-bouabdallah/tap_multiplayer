@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
 import 'package:confetti/confetti.dart';
+import 'package:provider/provider.dart';
+import 'package:tap_multiplayer/assets/Colors.dart';
+import 'package:tap_multiplayer/assets/ThemeModel.dart';
 
 late int difficulty;
 
@@ -87,14 +90,17 @@ class _TheGameState extends State<TheGame> {
         heightPlayer2 = heightPlayer2 - space*_cpt2 + space*_cpt ;
         heightPlayer1 = heightPlayer1 + space*_cpt2 - space*_cpt;
         print(difficulty + space);
+
+        print('player 1 ' + heightPlayer1.toString());
+        print('player 2 ' + heightPlayer2.toString());
         ///if one of the boxes reach full screen then the game should stops
-        if(heightPlayer1>=(_screenHeight) || heightPlayer2<=5.0){
+        if(heightPlayer1>=(_screenHeight) || heightPlayer2<=5.0 || (space >10.0 && heightPlayer1>=(_screenHeight-20)) ){
           _win = true;
           _textPlayer1 = "You won!";
           _textPlayer2 = "You lost";
 
         }
-        else if(heightPlayer2>=(_screenHeight) || heightPlayer1<=(space -5.0)){
+        else if( heightPlayer2>=(_screenHeight) || heightPlayer1<=(space -5.0) || (space >10.0 && heightPlayer2>=(_screenHeight-20))){
           _win = true;
           _textPlayer2 = "You won!";
           _textPlayer1 = "You lost";
@@ -122,14 +128,16 @@ class _TheGameState extends State<TheGame> {
 
         if(_win){
 
+          ///reset parameters
           heightPlayer1 = heightPlayer2= _screenHeight/2;
           _cpt = _cpt2 = 0;
 
           _start = false;
 
-          ///wait 5 seconds before the button reappear
-          Timer(Duration(seconds: 5),(){
+          ///wait 3 seconds before the button is clickable again
+          Timer(Duration(seconds: 3),(){
             _win = false;
+            setState(() {});
           });
         }
 
@@ -152,7 +160,7 @@ class _TheGameState extends State<TheGame> {
           ///we need to get the position of tapping to know which player did it
           onTap:  (position) => _start ?
           _handleTap(position, _screenHeight)
-           : {},
+           : {}, ///if the game didn't start we do nothing
           child: Stack(
             children: [
               Column(
@@ -163,7 +171,7 @@ class _TheGameState extends State<TheGame> {
                     height: heightPlayer1 + space*_cpt2 - space*_cpt ,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Colors.red[400],
+                        color:  Provider.of<ThemeModel>(context).currentTheme.colorScheme.secondary,
                       ),
                       child:
                       ///if one of the players won
@@ -188,15 +196,16 @@ class _TheGameState extends State<TheGame> {
                   ),
                   SizedBox(
                     width: width,
-                    height: heightPlayer2 - space*_cpt2 + space*_cpt,
+                    height: heightPlayer2 - space*_cpt2 + space*_cpt, ///calculate the height
                     child: /*Column(
                       children: [*/
                         DecoratedBox(
                         decoration: BoxDecoration(
-                        color: Colors.blue[300],
+                        color: Provider.of<ThemeModel>(context).currentTheme.colorScheme.primary,
                         ),
                         child:
-                        _win || !_start ? Align(
+                        _win || !_start ? Align( ///if one of the players won or the game havne"t started
+                                                ///yet, we show the text
                           alignment: Alignment.center,
                           child: Text(
                             _textPlayer2,
@@ -233,19 +242,21 @@ class _TheGameState extends State<TheGame> {
                 child: Align(
                   alignment: Alignment.center,
                   child: FloatingActionButton(
-                    onPressed: ()=> _win? {}
-                    :{
+                    onPressed: ()=> _win? {} ///if a player won we disable the button for a moment
+                                            ///( the {} is the only way to disable it)
+                    :{ ///otherwise turn start to true when clicked so it can be invisible
                       setState((){
                         _start = true;
                       })
                     },
-
+                    backgroundColor: Provider.of<ThemeModel>(context).currentTheme.buttonTheme.colorScheme?.background,
                     child: Text(
                       'Start',
                     ),
                   ),
                 ),
-                visible: !_start,
+                visible: !_start, ///if the game started the button must be invisible
+
               )
 
             ]
